@@ -5,7 +5,6 @@ import { getUserById } from "@/data/user"
 import { db } from "./lib/db"
 import authConfig from "@/auth.config"
 import { UserRole } from "@prisma/client"
-import { execSync } from "child_process"
 
 export const {
     handlers: { GET, POST },
