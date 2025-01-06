@@ -1,5 +1,6 @@
 import { RoleGate } from "@/components/auth/role-gate";
 import { FormSuccess } from "@/components/form-success";
+import { Button } from "@/components/ui/button";
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import { UserRole } from "@prisma/client";
 
@@ -15,6 +16,14 @@ const AdminPage = ()=>{
                 <RoleGate allowedRole={UserRole.ADMIN}>
                     <FormSuccess message="You are allowed to see this content!" />
                 </RoleGate>
+                <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
+                    <p className="text-sm font-medium">
+                        Admin-only API Route
+                    </p>
+                    <Button>
+                        Update
+                    </Button>
+                </div>
             </CardContent>
         </Card>
     )
