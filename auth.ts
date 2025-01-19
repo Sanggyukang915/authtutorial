@@ -31,9 +31,9 @@ export const {
             if(account?.provider !== "credentials") return true;
             
             const existingUser = await getUserById(user.id);
-            if(!existingUser?.emailVerified) return false;
+            //if(!existingUser?.emailVerified) return false;
 
-            if(existingUser.isTwoFactorEnabled){
+            if(existingUser?.isTwoFactorEnabled){
                 const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
                 if(!twoFactorConfirmation) return false;
 

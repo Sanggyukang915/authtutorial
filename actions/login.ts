@@ -28,14 +28,13 @@ export const login = async (
         return { error: "Email does not exist!" }
     }
 
-    if (!existingUser.emailVerified) {
-        const verificationToken = await generateVerificationToken(
-            existingUser.email,
-        );
+    /*if (!existingUser.emailVerified) {
+
+        const verificationToken = await generateVerificationToken(existingUser.email);
         await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
         return { success: "confirmation email sent!" };
-    }
+    }*/
 
     if (existingUser.isTwoFactorEnabled && existingUser.email) {
         if (code) {
@@ -89,7 +88,7 @@ export const login = async (
         await signIn("credentials", {
             email,
             password,
-            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+            redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT
         })
     } catch (error) {
         if (error instanceof AuthError) {

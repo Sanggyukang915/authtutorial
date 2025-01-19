@@ -52,18 +52,13 @@ export const LoginForm = () => {
                         form.reset({ ...form.getValues(), code: "" });
                         setError(data.error);
                     }
-
-                    if (data?.success) {
+                    /*if (data?.success) {
                         form.reset();
                         setSuccess(data.success);
-                    }
-
+                    }*/
                     if (data?.twoFactor) {
                         setShowTwoFactor(true);
                     }
-                })
-                .catch((error) => {
-                    setError(`error: ${error}`)
                 })
         })
     }

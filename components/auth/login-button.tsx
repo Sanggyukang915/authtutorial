@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
@@ -33,6 +34,9 @@ export const LoginButton = ({
                 <DialogTrigger asChild={asChild}>
                     {children}
                 </DialogTrigger>
+                <DialogDescription hidden>
+                    login modal
+                </DialogDescription>
                 <DialogContent className="p-1 w-auto bg-transparent border-none">
                     <DialogTitle>Login Form</DialogTitle>
                         <LoginForm />

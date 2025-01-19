@@ -1,34 +1,23 @@
-import { LoginButton } from "@/components/auth/login-button"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { Poppins } from "next/font/google"
-
-const font = Poppins({
-  subsets: ["latin"],
-  weight: ["600"]
-})
+import PathNav from "@/components/auth/pathnav"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 
 export default function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-cente">
-      <div className="space-y-6 text-center">
-        <h1 className={cn(
-          "text-6xl font-medium  drop-shadow-md",
-          font.className,
-        )}>
-          Auth
-        </h1>
-        <p className="text-lg">
-          A simple authentication service
-        </p>
-        <div>
-          <LoginButton mode="modal" asChild>
-            <Button variant="secondary" size="lg">
-              Sign in
-            </Button>
-          </LoginButton>
+    <SidebarInset>
+      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+        <div className="flex items-center gap-2 px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+            <PathNav prevPath={null} curPath={[{pathName: "home", path: "/"}]}/>
         </div>
+      </header>
+      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        test
       </div>
-    </main>
+    </SidebarInset>
   )
 }
