@@ -33,11 +33,13 @@ export const NewPasswordSchema =z.object({
         message:"Minimum of 6 characters required"
     })
 })
+
 export const ResetSchema =z.object({
     email: z.string().email({
         message:"email is required"
     })
 })
+
 export const LoginSchema =z.object({
     email: z.string().email({
         message:"email is required"
@@ -47,6 +49,7 @@ export const LoginSchema =z.object({
     }),
     code: z.string().optional(),
 })
+
 export const RegisterSchema =z.object({
     email: z.string().email({
         message:"email is required"

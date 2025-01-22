@@ -14,7 +14,7 @@ export function NavLoginButton({ user }: UserButtonProps) {
     }
     return (
         <LoginButton mode="modal" asChild>
-            <Button>
+            <Button className="truncate"> 
                 Sign In
             </Button>
         </LoginButton>

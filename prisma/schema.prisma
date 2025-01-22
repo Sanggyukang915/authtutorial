@@ -29,6 +29,10 @@ model User {
   password      String?
   role          UserRole @default(USER)
   accounts      Account[]
+
+  teams     Team[]    @relation("UserTeams")
+  projects  Project[] @relation("UserProjects")
+
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
@@ -89,4 +93,35 @@ model TwoFactorConfirmation{
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Team{
+  id            String  @id @default(cuid())
+  name          String
+  image         String?
+  plan          String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  users     User[]    @relation("UserTeams")
+  projects  Project[] 
+
+  @@map("teams")
+}
+
+model Project{
+  id                String  @id @default(cuid())
+  name              String
+  image             String?
+  description       String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  ownerId   String
+  teamId    String?
+  
+  owner     User     @relation("UserProjects", fields: [ownerId], references: [id])
+  team      Team?    @relation(fields: [teamId], references: [id])
+
+  @@map("projects")
 }

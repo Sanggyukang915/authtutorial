@@ -28,25 +28,22 @@ import {
 export function NavProjects({
   projects,
 }: {
-  projects: {
+  projects?: {
     name: string
-    url: string
-    icon: LucideIcon
+    image?: string
+    description? : string
   }[]
 }) {
   const { isMobile } = useSidebar()
-
+  console.log(projects);
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => (
+        {projects?.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
-                <item.icon />
                 <span>{item.name}</span>
-              </a>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
