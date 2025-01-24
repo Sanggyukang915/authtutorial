@@ -13,8 +13,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavLoginButton } from "@/components/auth/nav-login-button"
-import { Project, Team } from "@prisma/client"
-// This is sample data.
 
 interface User {
   teams: {
