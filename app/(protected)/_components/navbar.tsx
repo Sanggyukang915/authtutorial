@@ -1,6 +1,5 @@
 "use client";
 
-import { UserButton } from "@/components/auth/nav-login-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

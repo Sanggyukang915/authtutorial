@@ -1,11 +1,3 @@
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import {
     SidebarInset,
@@ -21,7 +13,7 @@ const NewPasswordPage = () => {
                 <div className="flex items-center gap-2 px-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator orientation="vertical" className="mr-2 h-4" />
-                    <PathNav prevPath={null} curPath={["auth","new-password"]} />
+                    <PathNav prevPath={null} curPath={[{ pathName: "auth", path: "/auth" }, { pathName: "new password", path: "/new-password" }]} />
                 </div>
             </header>
             <div className="h-full flex items-center justify-center">
