@@ -38,7 +38,7 @@ import { FormError } from "@/components/form-error";
 import { UserRole } from "@prisma/client";
 
 const SettingsPage = () => {
-    let user =useCurrentUser();
+    const user =useCurrentUser();
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
     const { update } = useSession();

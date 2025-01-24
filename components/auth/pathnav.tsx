@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { ChevronDown, Key, Slash } from "lucide-react"
+import { Slash } from "lucide-react"
 import {
     Breadcrumb,
     BreadcrumbEllipsis,

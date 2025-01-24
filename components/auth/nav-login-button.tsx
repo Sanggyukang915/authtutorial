@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button"
 import { NavUser } from "@/components/nav-user"
 
 interface UserButtonProps {
-    user: any
+    user?: {
+        name: string
+        email: string
+        image: string
+    };
 }
 
 export function NavLoginButton({ user }: UserButtonProps) {
@@ -14,7 +18,7 @@ export function NavLoginButton({ user }: UserButtonProps) {
     }
     return (
         <LoginButton mode="modal" asChild>
-            <Button className="truncate"> 
+            <Button className="truncate">
                 Sign In
             </Button>
         </LoginButton>
