@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { getUserById } from "@/data/user"
 import { db } from "./lib/db"
 import authConfig from "@/auth.config"
-import { Project, Team, UserRole } from "@prisma/client"
+import { Project, Team, UserRole, Document } from "@prisma/client"
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation"
 import { getAccountByUserId } from "@/data/account"
 
@@ -58,8 +58,9 @@ export const {
                 session.user.name = token.name;
                 session.user.email = token.email as string;
                 session.user.isOAuth = token.isOAuth as boolean;
-                session.user.teams = token.team as Team;
-                session.user.projects = token.project as Project;
+                session.user.teams = token.team as Team[];
+                session.user.projects = token.project as Project[];
+                session.user.documents = token.document as Document[];
             }
 
             return session;
@@ -80,6 +81,7 @@ export const {
             token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
             token.team = existingUser.teams;
             token.project = existingUser.projects;
+            token.document = existingUser.documents;
 
             return token;
         }

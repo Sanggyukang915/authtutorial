@@ -32,7 +32,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/user-current-user";
+import { useCurrentUser } from "@/hooks/use-current-user";
 import { FormSuccess } from "@/components/form-success";
 import { FormError } from "@/components/form-error";
 import { UserRole } from "@prisma/client";
@@ -43,7 +43,6 @@ const SettingsPage = () => {
     const [success, setSuccess] = useState<string | undefined>();
     const { update } = useSession();
     const [isPending, startTransition] = useTransition();
-
     const form = useForm<z.infer<typeof SettingSchema>>({
         resolver: zodResolver(SettingSchema),
         defaultValues: {

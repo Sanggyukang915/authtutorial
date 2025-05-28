@@ -10,3 +10,8 @@ export const currentRole = async ()=>{
 
     return session?.user?.role;
 };
+export const currentDocument = async ()=>{
+    const session = await auth();
+
+    return session?.user.documents;
+}

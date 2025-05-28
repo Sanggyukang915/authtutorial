@@ -1,14 +1,13 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { currentUser } from "@/lib/auth";
-
+import { SessionProvider } from "next-auth/react";
+import { AppNavBar } from "@/components/app-navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,7 +29,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const user = await currentUser();
   return (
     <SessionProvider session={session}>
       <html lang="en">
@@ -45,8 +43,12 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <SidebarProvider>
-              <AppSidebar user={user} />
-                    {children}
+              <AppSidebar />
+              <AppNavBar>
+                <div className="h-full w-full flex flex-col gap-y-10 items-center justify-center">
+                  {children}
+                </div>
+              </AppNavBar>
             </SidebarProvider>
           </ThemeProvider>
         </body>

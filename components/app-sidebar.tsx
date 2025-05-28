@@ -2,8 +2,6 @@
 
 import * as React from "react"
 
-import { NavProjects } from "@/components/nav-projects"
-import { TeamSwitcher } from "@/components/team-switcher"
 import { Folder } from "lucide-react"
 import {
   Sidebar,
@@ -13,46 +11,32 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavLoginButton } from "@/components/auth/nav-login-button"
+import { MainSection } from "./main-section"
+import { Separator } from "@/components/ui/separator"
+import { PersonalSection } from "./personal-section"
+import Link from "next/link"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
-interface User {
-  teams: {
-    name: string
-    image?: string
-    plan?: string
-  }[]
-  projects: {
-    name: string
-    image?: string
-    description?: string
-  }[]
-  user: {
-    name: string
-    email: string
-    image: string
-  };
-}
-
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  user?: User
-}
-
-export function AppSidebar({ user, ...props }: AppSidebarProps) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useCurrentUser();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarContent className="flex-row items-center">
-          <Folder className="h-8 w-8 rounded-lg" />
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate text-lg font-semibold">Directory</span>
-          </div>
+          <Link href='/' className="flex items-center gap-4">
+            <Folder />
+            <span className="text-xl">Directory</span>
+          </Link>
         </SidebarContent>
       </SidebarHeader>
       <SidebarContent>
-        <TeamSwitcher teams={user?.teams} />
-        <NavProjects projects={user?.projects} />
+        <Separator />
+        <MainSection />
+        <Separator />
+        {user && <PersonalSection />}
       </SidebarContent>
       <SidebarFooter>
-        <NavLoginButton user={user?.user} />
+        <NavLoginButton />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

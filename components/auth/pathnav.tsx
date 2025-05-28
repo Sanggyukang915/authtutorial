@@ -1,23 +1,15 @@
 'use client';
 
 import * as React from "react"
-import Link from "next/link"
 import { Slash } from "lucide-react"
 import {
     Breadcrumb,
-    BreadcrumbEllipsis,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
-    BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { usePathname } from "next/navigation";
 
 interface PathProps {
     pathName: string;
@@ -31,91 +23,31 @@ interface RouteProps {
 
 const PATHES_TO_DISPLAY = 3
 
-export default function PathNav({ prevPath, curPath }: RouteProps) {
-    const [open, setOpen] = React.useState(false)
-    if (prevPath !== null) {
-        return (
-            <Breadcrumb>
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href='/'>home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator>
-                        <Slash />
-                    </BreadcrumbSeparator>
-                    {prevPath.length > PATHES_TO_DISPLAY ? (
-                        <>
-                            <BreadcrumbItem>
-                                <DropdownMenu open={open} onOpenChange={setOpen}>
-                                    <DropdownMenuTrigger
-                                        className="flex items-center gap-1"
-                                        aria-label="Toggle menu"
-                                    >
-                                        <BreadcrumbEllipsis className="h-4 w-4" />
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="start">
-                                        {prevPath.slice(0, -2).map((item, index) => (
-                                            <DropdownMenuItem key={index}>
-                                                <Link href={`${item.path}`}>
-                                                    {item.pathName}
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        ))}
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator>
-                                <Slash />
-                            </BreadcrumbSeparator>
-                        </>
-                    ) : null}
-                    {prevPath.slice(-PATHES_TO_DISPLAY + 1).map((item, index) => (
-                        <ol key={index} className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
-                            <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    asChild
-                                    className="max-w-20 truncate md:max-w-none"
-                                >
-                                    <Link href={`${item.path}`}>{item.pathName}</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator>
-                                <Slash />
-                            </BreadcrumbSeparator>
-                        </ol>
-                    ))}
-                    {curPath.map((items, index) => (
-                        <ol key={index} className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
-                            <BreadcrumbPage className="max-w-20 truncate md:max-w-none">
-                                {`${items.pathName}`}
-                            </BreadcrumbPage>
-                            <BreadcrumbSeparator>
-                                <Slash />
-                            </BreadcrumbSeparator>
-                        </ol>
-                    ))}
-                </BreadcrumbList>
-            </Breadcrumb>
-        )
-    }
+export default function PathNav() {
+    const pathname = usePathname()
+    const segments = pathname.split('/').filter(Boolean)
+
+    const items = segments.map((seg, i) => ({
+        name: decodeURIComponent(seg),
+        path: '/' + segments.slice(0, i + 1).join('/'),
+    }))
     return (
         <Breadcrumb>
             <BreadcrumbList>
                 <BreadcrumbItem>
-                    <BreadcrumbLink href='/'>home</BreadcrumbLink>
+                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator>
-                    <Slash />
-                </BreadcrumbSeparator>
-                {curPath.map((items, index) => (
-                    <ol key={index} className="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
-                        <BreadcrumbPage className="max-w-20 truncate md:max-w-none">
-                            {`${items.pathName}`}
-                        </BreadcrumbPage>
+                {items.map((item, i) => (
+                    <React.Fragment key={item.path}>
                         <BreadcrumbSeparator>
                             <Slash />
                         </BreadcrumbSeparator>
-                    </ol>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href={item.path}>
+                                {item.name}
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                    </React.Fragment>
                 ))}
             </BreadcrumbList>
         </Breadcrumb>

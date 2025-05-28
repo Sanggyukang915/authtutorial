@@ -6,7 +6,7 @@ import {
   Settings,
   UserRoundPen,
 } from "lucide-react"
-
+import Link from "next/link"
 import {
   Avatar,
   AvatarFallback,
@@ -33,9 +33,9 @@ export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    image: string
+    name: string | null | undefined,
+    email: string | null | undefined,
+    image: string | null | undefined,
   }
 }) {
   const { isMobile } = useSidebar()
@@ -50,7 +50,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.image} alt={user.name} />
+                <AvatarImage src={user.image ? user.image : undefined} alt={user.name ? user.name : undefined} />
                 <AvatarFallback className="rounded-lg">{user.name}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -69,7 +69,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.image} alt={user.name} />
+                  <AvatarImage src={user.image ? user.image : undefined} alt={user.name ? user.name : undefined} />
                   <AvatarFallback className="rounded-lg">{user.name}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -81,12 +81,10 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <UserRoundPen />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings />
-                Setting
+                <Link href={"/settings/"} className="flex items-center gap-4">
+                  <Settings />
+                  <span className="text-sm">Setting</span>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

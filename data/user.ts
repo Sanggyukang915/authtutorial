@@ -24,6 +24,7 @@ export const getUserById = async (id: string | undefined) => {
                 include: {
                     teams: true,
                     projects:true,
+                    documents:true,
                 }
             });
         return user;
