@@ -16,13 +16,6 @@ interface PathProps {
     path: string;
 }
 
-interface RouteProps {
-    prevPath: PathProps[] | null;
-    curPath: PathProps[];
-}
-
-const PATHES_TO_DISPLAY = 3
-
 export default function PathNav() {
     const pathname = usePathname()
     const segments = pathname.split('/').filter(Boolean)

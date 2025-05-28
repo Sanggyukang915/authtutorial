@@ -4,7 +4,6 @@ import {
   ChevronsUpDown,
   LogOut,
   Settings,
-  UserRoundPen,
 } from "lucide-react"
 import Link from "next/link"
 import {

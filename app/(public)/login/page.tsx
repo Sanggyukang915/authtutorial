@@ -1,6 +1,6 @@
 "use client"
 import { useCurrentUser } from "@/hooks/use-current-user";
-const logInPage = ()=>{
+const LogInPage = ()=>{
     const user = useCurrentUser()
     if(!user) {
         window.location.href = "/";
@@ -10,4 +10,4 @@ const logInPage = ()=>{
         <div>login</div>
     )
 }
-export default logInPage;
+export default LogInPage;

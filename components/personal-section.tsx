@@ -5,8 +5,8 @@ import {
     ChevronRight,
     FolderIcon,
     HistoryIcon,
-    BookIcon,
-    ThumbsUpIcon
+    ThumbsUpIcon,
+    Plus,
 } from "lucide-react";
 import {
     SidebarGroup,
@@ -25,6 +25,11 @@ import {
 } from "./ui/collapsible";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useRouter } from "next/navigation";
+import { useCurrentDocuments } from "@/hooks/use-current-document";
+import { createDocument, deleteDocument, updateDocument } from "@/data/document";
+import { useEffect, useState } from "react";
+import { Document } from "@prisma/client";
+import { EditDocument } from "./edit-document";
 
 const items = [
     {
@@ -44,6 +49,28 @@ const items = [
 export const PersonalSection = () => {
     const user = useCurrentUser();
     const router = useRouter();
+    const docs = useCurrentDocuments();
+    const [documents, setDocuments] = useState<Document[]>();
+
+    useEffect(() => {
+        setDocuments(docs);
+    }, [])
+
+    const handleAdd = async () => {
+        console.log("SDfsdfs")
+        const newDoc = await createDocument("Untitled");
+        setDocuments(prev => [...prev || [], newDoc]);
+    }
+    const handleRename = async (id: string, newName: string) => {
+        const updateed = await updateDocument(id, newName);
+        setDocuments(prev => prev?.map(doc => (doc.id === id ? { ...doc, name: updateed.name } : doc)))
+    }
+
+    const handleDelete = async (id: string) => {
+        await deleteDocument(id);
+        setDocuments(prev => prev?.filter(doc => doc.id !== id));
+    }
+
     return (
         <SidebarGroup>
             <SidebarGroupLabel>You</SidebarGroupLabel>
@@ -80,36 +107,25 @@ export const PersonalSection = () => {
                             </CollapsibleTrigger>
                             <CollapsibleContent>
                                 <SidebarMenuSub>
+                                    {documents?.map(doc => (
+                                        <EditDocument
+                                            key={doc.id}
+                                            id={doc.id}
+                                            name={doc.name}
+                                            onRename={handleRename}
+                                            onDelete={handleDelete}
+                                        />
+                                    ))}
+
                                     <SidebarMenuSubItem>
-                                        <SidebarMenuButton asChild>
-                                            <Link href="/">
-                                                <span>All</span>
-                                            </Link>
-                                        </SidebarMenuButton>
+                                        <button
+                                            onClick={handleAdd}
+                                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
+                                        >
+                                            <Plus className="w-4 h-4" />
+                                            Add Document
+                                        </button>
                                     </SidebarMenuSubItem>
-                                    <SidebarMenuSub>
-                                        <SidebarMenuSubItem>
-                                            <SidebarMenuButton asChild>
-                                                <Link href="/">
-                                                    <span>study</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuSubItem>
-                                        <SidebarMenuSubItem>
-                                            <SidebarMenuButton asChild>
-                                                <Link href="/">
-                                                    <span>Algorithm</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuSubItem>
-                                        <SidebarMenuSubItem>
-                                            <SidebarMenuButton asChild>
-                                                <Link href="/">
-                                                    <span>Research Paper</span>
-                                                </Link>
-                                            </SidebarMenuButton>
-                                        </SidebarMenuSubItem>
-                                    </SidebarMenuSub>
                                 </SidebarMenuSub>
                             </CollapsibleContent>
                         </SidebarMenuItem>
