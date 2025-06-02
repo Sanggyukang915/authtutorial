@@ -1,11 +1,12 @@
 import { getDocument } from "@/data/document";
 import { notFound } from "next/navigation";
 
-interface DocumentPageProps {
+export default async function DocumentPage({
+  params,
+}: {
   params: { id: string };
 }
-
-export default async function DocumentPage({ params }: DocumentPageProps) {
+) {
   const { id } = params;
   const document = await getDocument(id);
 
