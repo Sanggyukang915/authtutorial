@@ -99,10 +99,18 @@ model TwoFactorConfirmation{
 model Document{
   id        String   @id @default(uuid())
   name      String
-  content   String?
+  content   Context[]
   createdAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Context {
+  id         String   @id @default(cuid())
+  content    String   
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id])
+  createdAt  DateTime @default(now())
 }
 
 model Team{
