@@ -6,7 +6,7 @@ interface DocumentPageProps {
 }
 
 export default async function DocumentPage({ params }: DocumentPageProps) {
-  const { id } = await params;
+  const { id } = params;
   const document = await getDocument(id);
 
   if (!document) {
@@ -20,10 +20,6 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
       <p className="mt-4 text-sm text-gray-500">
         Created at: {document.createdAt.toLocaleString()}
       </p>
-      <p> {document.content}
-      </p>
-
-      {/* 나중에 이 자리에 에디터, 콘텐츠 렌더링 등도 가능 */}
     </div>
   );
 }
