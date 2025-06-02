@@ -11,11 +11,6 @@ import {
 } from "@/components/ui/breadcrumb"
 import { usePathname } from "next/navigation";
 
-interface PathProps {
-    pathName: string;
-    path: string;
-}
-
 export default function PathNav() {
     const pathname = usePathname()
     const segments = pathname.split('/').filter(Boolean)
@@ -30,7 +25,7 @@ export default function PathNav() {
                 <BreadcrumbItem>
                     <BreadcrumbLink href="/">Home</BreadcrumbLink>
                 </BreadcrumbItem>
-                {items.map((item, i) => (
+                {items.map((item) => (
                     <React.Fragment key={item.path}>
                         <BreadcrumbSeparator>
                             <Slash />
