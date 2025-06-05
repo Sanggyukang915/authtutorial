@@ -33,7 +33,11 @@ export const getDocument = async (id: string) => {
     const document = await db.document.findUnique({
         where: { id },
         include: {
-            content: true,
+            content: {
+                orderBy: {
+                    createdAt: 'asc',
+                },
+            },
         }
     });
     return document;
@@ -42,36 +46,39 @@ export const getDocument = async (id: string) => {
 export const createDocumentContent = async (id: string) => {
     return await db.document.update({
         where: { id },
-        data:{
+        data: {
             content: {
                 create: [
-                    {content: ""},
+                    { content: "" },
                 ]
             }
         }
     })
 }
-export const updateDocumentContent = async (id: string, newContent: string) => {
-    return await db.document.update({
-        where: { id },
-        data:{
-            content: {
-                create: [
-                    {content: newContent},
-                ]
-            }
-        }
+export const updateDocumentContent = async (contextId: string, content: string) => {
+    return await db.context.update({
+        where: { id: contextId },
+        data: { content }
+    });
+}
+
+export const deleteDocumentContent = async (contextId: string) => {
+    return await db.context.delete({
+        where: { id: contextId }
     })
 }
 
-export const deleteDocumentContent = async (id: string, newContent: string) => {
-    return await db.document.update({
-        where: { id },
-        data:{
-            content: {
-                create: [
-                    {content: newContent},
-                ]
+export const publicDocuments = async () => {
+    return db.document.findMany({
+        where: {
+            isPublic: true,
+        },
+        include: {
+            content: true,
+            user: {
+                select: {
+                    name: true,
+                }
             }
         }
     })

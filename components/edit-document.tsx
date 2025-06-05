@@ -1,75 +1,67 @@
-import Link from "next/link";
-import {
-    SidebarMenuButton,
-    SidebarMenuSubItem,
-} from "./ui/sidebar";
-import { useState, useRef, useEffect } from "react";
-import {
-    Pencil,
-    Trash,
-} from "lucide-react";
+"use client";
 
-interface Props {
-    id: string;
-    name: string;
-    onRename: (id: string, newName: string) => void;
-    onDelete: (id: string) => void;
+import { useState, useTransition } from "react";
+import { JSONContent } from "@tiptap/react";
+import { deleteDocumentContent, updateDocumentContent } from "@/data/document";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { SimpleEditor } from "./tiptap-templates/simple/simple-editor";
+
+interface Propts {
+    contextId: string;
+    content: string;
 }
 
-export function EditDocument({ id, name, onRename, onDelete }: Props) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState(name);
-    const inputRef = useRef<HTMLInputElement>(null);
+export default function EditDocument({ contextId, content }: Propts) {
+    const [value, setValue] = useState<string>(content);
+    const [isPending, startTransition] = useTransition();
+    const router = useRouter();
+    const [isEditing, setIsEditing] = useState(false)
 
-    useEffect(() => {
-        if (isEditing) {
-            inputRef.current?.focus();
-            inputRef.current?.setSelectionRange(0, value.length);
-        }
-    }, [isEditing]);
-
-    const handleSubmit = () => {
-        const trimmed = value.trim();
-        if (trimmed && trimmed !== name) {
-            onRename(id, trimmed);
-        }
-        setIsEditing(false);
+    const handleChange = () => {
+        startTransition(() => {
+            updateDocumentContent(contextId, value)
+        })
+    }
+    const handleDelete = () => {
+        startTransition(() => {
+            deleteDocumentContent(contextId);
+        });
+        router.refresh()
     };
-
     return (
         <>
+            {!isEditing && (
+                <div className="flex gap-2 mb-3">
+                    <Button variant="outline" onClick={() => setIsEditing(true)}>
+                        Edit
+                    </Button>
+                    <Button variant="outline" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </div>
+            )}
+            {isEditing && (
+                <div className="flex gap-2 mb-3">
+                    <Button variant="outline" onClick={() => {
+                        handleChange();
+                        setIsEditing(false)
+                    }}>
+                        Confirm
+                    </Button>
+                    <Button variant="outline" onClick={()=> {
+                        setValue(content)
+                        setIsEditing(false)
+                    }}>
+                        Cancel
+                    </Button>
+                </div>
+            )}
             {isEditing ? (
-                <input
-                    ref={inputRef}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    onBlur={handleSubmit}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") handleSubmit();
-                        if (e.key === "Escape") {
-                            setValue(name);
-                            setIsEditing(false);
-                        }
-                    }}
-                    className="w-full px-1 py-0.5 text-sm border border-gray-300 rounded"
-                />
+                <SimpleEditor contextId={contextId} content={value} onChange={setValue}/>
             ) : (
-                <SidebarMenuSubItem key={id} className="flex justify-between items-center">
-                    <SidebarMenuButton asChild>
-                        <Link href={`/${id}`}>
-                            <span>{name}</span>
-                        </Link>
-                    </SidebarMenuButton>
-                    <div className="flex gap-1 ml-2">
-                        <button onClick={() => setIsEditing(true)}>
-                            <Pencil className="w-4 h-4 text-gray-400 hover:text-blue-600" />
-                        </button>
-                        <button onClick={() => onDelete(id)}>
-                            <Trash className="w-4 h-4 text-gray-400 hover:text-red-600" />
-                        </button>
-                    </div>
-                </SidebarMenuSubItem>
+                <div dangerouslySetInnerHTML={{ __html: value ?? ""}} />
             )}
         </>
-    );
+    )
 }

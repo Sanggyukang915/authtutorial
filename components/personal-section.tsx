@@ -29,7 +29,7 @@ import { useCurrentDocuments } from "@/hooks/use-current-document";
 import { createDocument, deleteDocument, updateDocument } from "@/data/document";
 import { useEffect, useState } from "react";
 import { Document } from "@prisma/client";
-import { EditDocument } from "./edit-document";
+import { EditSideVarDocument } from "./edit-sidevar-document";
 
 const items = [
     {
@@ -108,7 +108,7 @@ export const PersonalSection = () => {
                             <CollapsibleContent>
                                 <SidebarMenuSub>
                                     {documents?.map(doc => (
-                                        <EditDocument
+                                        <EditSideVarDocument
                                             key={doc.id}
                                             id={doc.id}
                                             name={doc.name}
