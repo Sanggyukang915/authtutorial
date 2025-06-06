@@ -1,4 +1,4 @@
-import { getDocument, updateDocumentAuth } from "@/data/document";
+import { getDocument} from "@/data/document";
 import { notFound } from "next/navigation";
 import { newContent } from "@/actions/new-content";
 import { Button } from "@/components/ui/button";

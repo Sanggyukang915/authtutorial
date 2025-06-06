@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader } from 'lucide-react';
 import { updateDocumentAuth } from '@/data/document';
 import { Button } from './ui/button';
 
@@ -12,16 +12,21 @@ type Props = {
 
 export function TogglePublic({ documentId, isPublic }: Props) {
     const [docPublic, setDocPublic] = useState<boolean>(isPublic)
-    const [pending, startTransition] = useTransition();
+    const [isPending, startTransition] = useTransition();
 
     return (
-        <Button variant="outline" onClick={() => {
+        <Button variant="outline" disabled={isPending} onClick={() => {
             startTransition(() => {
                 updateDocumentAuth(documentId, !docPublic)
                 setDocPublic(!docPublic)
             })
         }}>
-            {docPublic ? (
+            {isPending ? (
+                <>
+                    <Loader className="animate-spin" />
+                    <span>Updating...</span>
+                </>
+            ) : docPublic ? (
                 <>
                     <Eye />
                     <span>Public</span>

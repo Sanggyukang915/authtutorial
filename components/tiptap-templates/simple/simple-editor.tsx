@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { EditorContent, EditorContext, JSONContent, useEditor } from "@tiptap/react"
+import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
@@ -76,9 +76,8 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 import "@/components/tiptap-templates/simple/simple-editor.scss"
 
 //import content from "@/components/tiptap-templates/simple/data/content.json"
-import { Content } from "@tiptap/react"
 
-const MainToolbarContent = React.memo(({
+const MainToolbarContent = React.memo(function MainToolbarContent({
   onHighlighterClick,
   onLinkClick,
   isMobile,
@@ -86,7 +85,7 @@ const MainToolbarContent = React.memo(({
   onHighlighterClick: () => void
   onLinkClick: () => void
   isMobile: boolean
-}) => {
+}) {
   return (
     <>
       <Spacer />
@@ -154,42 +153,43 @@ const MainToolbarContent = React.memo(({
   )
 })
 
-const MobileToolbarContent = React.memo(({
+const MobileToolbarContent = React.memo(function MobileToolbarContent({
   type,
   onBack,
 }: {
   type: "highlighter" | "link"
   onBack: () => void
-}) => (
-  <>
-    <ToolbarGroup>
-      <Button data-style="ghost" onClick={onBack}>
-        <ArrowLeftIcon className="tiptap-button-icon" />
-        {type === "highlighter" ? (
-          <HighlighterIcon className="tiptap-button-icon" />
-        ) : (
-          <LinkIcon className="tiptap-button-icon" />
-        )}
-      </Button>
-    </ToolbarGroup>
+}) {
+  return (
+    <>
+      <ToolbarGroup>
+        <Button data-style="ghost" onClick={onBack}>
+          <ArrowLeftIcon className="tiptap-button-icon" />
+          {type === "highlighter" ? (
+            <HighlighterIcon className="tiptap-button-icon" />
+          ) : (
+            <LinkIcon className="tiptap-button-icon" />
+          )}
+        </Button>
+      </ToolbarGroup>
 
-    <ToolbarSeparator />
+      <ToolbarSeparator />
 
-    {type === "highlighter" ? (
-      <ColorHighlightPopoverContent />
-    ) : (
-      <LinkContent />
-    )}
-  </>
-))
+      {type === "highlighter" ? (
+        <ColorHighlightPopoverContent />
+      ) : (
+        <LinkContent />
+      )}
+    </>
+  )
+})
 
 interface Propts {
-  contextId: string;
   content: string;
   onChange?: (value: string) => void
 }
 
-export function SimpleEditor({ contextId, content, onChange }: Propts) {
+export function SimpleEditor({ content, onChange }: Propts) {
   const isMobile = useMobile()
   const windowSize = useWindowSize()
   const [mobileView, setMobileView] = React.useState<
@@ -231,7 +231,7 @@ export function SimpleEditor({ contextId, content, onChange }: Propts) {
       Link.configure({ openOnClick: false }),
     ],
     content: content,
-    onUpdate: ({editor})=>{
+    onUpdate: ({ editor }) => {
       onChange?.(editor.getHTML())
     },
   })
@@ -248,29 +248,29 @@ export function SimpleEditor({ contextId, content, onChange }: Propts) {
 
   return (
     <EditorContext.Provider value={{ editor }}>
-        <Toolbar
-          ref={toolbarRef}
-          style={
-            isMobile
-              ? {
-                bottom: `calc(100% - ${windowSize.height - bodyRect.y}px)`,
-              }
-              : {}
-          }
-        >
-          {mobileView === "main" ? (
-            <MainToolbarContent
-              onHighlighterClick={() => setMobileView("highlighter")}
-              onLinkClick={() => setMobileView("link")}
-              isMobile={isMobile}
-            />
-          ) : (
-            <MobileToolbarContent
-              type={mobileView === "highlighter" ? "highlighter" : "link"}
-              onBack={() => setMobileView("main")}
-            />
-          )}
-        </Toolbar>
+      <Toolbar
+        ref={toolbarRef}
+        style={
+          isMobile
+            ? {
+              bottom: `calc(100% - ${windowSize.height - bodyRect.y}px)`,
+            }
+            : {}
+        }
+      >
+        {mobileView === "main" ? (
+          <MainToolbarContent
+            onHighlighterClick={() => setMobileView("highlighter")}
+            onLinkClick={() => setMobileView("link")}
+            isMobile={isMobile}
+          />
+        ) : (
+          <MobileToolbarContent
+            type={mobileView === "highlighter" ? "highlighter" : "link"}
+            onBack={() => setMobileView("main")}
+          />
+        )}
+      </Toolbar>
       <div className="content-wrapper">
         <EditorContent
           editor={editor}

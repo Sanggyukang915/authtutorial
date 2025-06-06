@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { JSONContent } from "@tiptap/react";
 import { deleteDocumentContent, updateDocumentContent } from "@/data/document";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
@@ -35,11 +34,11 @@ export default function EditDocument({ contextId, content, isCurrentUserDoc }: P
             {isCurrentUserDoc && (
                 isEditing ? (
                     <div className="flex gap-2 mb-3">
-                        <Button variant="outline" onClick={() => {
+                        <Button variant="outline" disabled={isPending} onClick={() => {
                             handleChange();
                             setIsEditing(false)
                         }}>
-                            Confirm
+                            {isPending ? "Saving..." : "Confirm"}
                         </Button>
                         <Button variant="outline" onClick={() => {
                             setValue(content)
@@ -53,16 +52,16 @@ export default function EditDocument({ contextId, content, isCurrentUserDoc }: P
                         <Button variant="outline" onClick={() => setIsEditing(true)}>
                             Edit
                         </Button>
-                        <Button variant="outline" onClick={handleDelete}>
-                            Delete
+                        <Button variant="outline" disabled={isPending} onClick={handleDelete}>
+                            {isPending ? "Deleting..." : "Delete"}
                         </Button>
                     </div>
                 )
             )}
             {isEditing ? (
-                <SimpleEditor contextId={contextId} content={value} onChange={setValue} />
+                <SimpleEditor content={value} onChange={setValue} />
             ) : (
-                <div dangerouslySetInnerHTML={{ __html: value ?? "" }} />
+                <div className="whitespace-pre-wrap break-words overflow-x-auto max-w-full" dangerouslySetInnerHTML={{ __html: value ?? "" }} />
             )}
         </>
     )
