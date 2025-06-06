@@ -16,12 +16,18 @@ export const createDocument = async (name: string) => {
     return document;
 }
 
-export const updateDocument = async (id: string, name: string) => {
+export const updateDocumentName = async (id: string, name: string) => {
     return await db.document.update({
         where: { id },
         data: { name },
     });
 };
+export const updateDocumentAuth = async(id:string, isPublic: boolean)=>{
+    return await db.document.update({
+        where:{id},
+        data: {isPublic},
+    })
+}
 
 export const deleteDocument = async (id: string) => {
     return await db.document.delete({

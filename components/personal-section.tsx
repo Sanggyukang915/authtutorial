@@ -26,7 +26,7 @@ import {
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useRouter } from "next/navigation";
 import { useCurrentDocuments } from "@/hooks/use-current-document";
-import { createDocument, deleteDocument, updateDocument } from "@/data/document";
+import { createDocument, deleteDocument, updateDocumentName } from "@/data/document";
 import { useEffect, useState } from "react";
 import { Document } from "@prisma/client";
 import { EditSideVarDocument } from "./edit-sidevar-document";
@@ -62,7 +62,7 @@ export const PersonalSection = () => {
         setDocuments(prev => [...prev || [], newDoc]);
     }
     const handleRename = async (id: string, newName: string) => {
-        const updateed = await updateDocument(id, newName);
+        const updateed = await updateDocumentName(id, newName);
         setDocuments(prev => prev?.map(doc => (doc.id === id ? { ...doc, name: updateed.name } : doc)))
     }
 
