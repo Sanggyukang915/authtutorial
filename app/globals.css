@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "../styles/_keyframe-animations.scss";
-@import "../styles/_variables.scss";
+@import "@/styles/_keyframe-animations.scss";
+@import "@/styles/_variables.scss";
 
 html,
 body,
