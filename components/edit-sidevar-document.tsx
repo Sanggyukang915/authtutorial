@@ -56,7 +56,7 @@ export function EditSideVarDocument({ id, name, onRename, onDelete }: Props) {
             ) : (
                 <SidebarMenuSubItem key={id} className="flex justify-between items-center">
                     <SidebarMenuButton asChild>
-                        <Link href={`/${id}`}>
+                        <Link href={`/doc/${id}`}>
                             <span>{name}</span>
                         </Link>
                     </SidebarMenuButton>

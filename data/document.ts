@@ -75,17 +75,43 @@ export const deleteDocumentContent = async (contextId: string) => {
 }
 
 export const publicDocuments = async () => {
-    return db.document.findMany({
-        where: {
-            isPublic: true,
+  return db.document.findMany({
+    where: {
+      isPublic: true,
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      user: {
+        select: {
+          name: true,
         },
-        include: {
-            content: true,
-            user: {
-                select: {
-                    name: true,
-                }
-            }
-        }
-    })
+      },
+      content: {
+        take: 1, // 가장 첫 번째 내용만 가져옴
+        select: {
+          content: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+}
+
+export const publicDocumentsNameId = async () => {
+  return db.document.findMany({
+    where: {
+      isPublic: true,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
 }

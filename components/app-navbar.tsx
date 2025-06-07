@@ -1,7 +1,7 @@
 "use client"
 
 import PathNav from "@/components/auth/pathnav"
-import { SearchInput } from "@/components/search-input"
+import { SearchBar } from "@/components/search-bar"
 import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,
@@ -18,7 +18,7 @@ export function AppNavBar({ children }: {children:React.ReactNode }) {
           <PathNav/>
         </div>
         <div className="flex-1 flex justify-center max-w-[720px] mx-auto">
-          <SearchInput />
+          <SearchBar />
         </div>
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

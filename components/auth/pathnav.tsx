@@ -19,6 +19,8 @@ export default function PathNav() {
         name: decodeURIComponent(seg),
         path: '/' + segments.slice(0, i + 1).join('/'),
     }))
+    const nonClickable = ['doc']
+
     return (
         <Breadcrumb>
             <BreadcrumbList>
@@ -31,9 +33,15 @@ export default function PathNav() {
                             <Slash />
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbLink href={item.path}>
-                                {item.name}
-                            </BreadcrumbLink>
+                            {nonClickable.includes(item.name) ? (
+                                <span className="text-muted-foreground cursor-default">
+                                    {item.name}
+                                </span>
+                            ) : (
+                                <BreadcrumbLink href={item.path}>
+                                    {item.name}
+                                </BreadcrumbLink>
+                            )}
                         </BreadcrumbItem>
                     </React.Fragment>
                 ))}

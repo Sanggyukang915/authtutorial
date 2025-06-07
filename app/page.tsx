@@ -9,7 +9,7 @@ export default async function Home() {
     <div className="max-w-4xl mx-auto">
       <header className="justify-center text-3xl font-semibold mb-2">Home</header>
       {documents?.map((doc) => (
-        <Link key={doc.id} href={`/${doc.id}`}>
+        <Link key={doc.id} href={`/doc/${doc.id}`}>
           <div
             className="mt-6 rounded-lg border border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 shadow-md p-6 hover:shadow-lg transition-shadow"
           >
