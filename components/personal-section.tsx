@@ -57,7 +57,6 @@ export const PersonalSection = () => {
     }, [])
 
     const handleAdd = async () => {
-        console.log("SDfsdfs")
         const newDoc = await createDocument("Untitled");
         setDocuments(prev => [...prev || [], newDoc]);
     }

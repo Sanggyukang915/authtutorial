@@ -110,7 +110,7 @@ model Context {
   id         String   @id @default(cuid())
   content    String   
   documentId String
-  document   Document @relation(fields: [documentId], references: [id])
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
 }
 

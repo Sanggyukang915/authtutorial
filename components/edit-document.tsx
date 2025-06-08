@@ -6,6 +6,13 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { SimpleEditor } from "./tiptap-templates/simple/simple-editor";
 
+import "@/components/tiptap-node/code-block-node/code-block-node.scss"
+import "@/components/tiptap-node/list-node/list-node.scss"
+import "@/components/tiptap-node/image-node/image-node.scss"
+import "@/components/tiptap-node/paragraph-node/paragraph-node.scss"
+
+import "@/components/tiptap-templates/simple/simple-editor.scss"
+
 interface Propts {
     contextId: string;
     content: string;
@@ -61,7 +68,12 @@ export default function EditDocument({ contextId, content, isCurrentUserDoc }: P
             {isEditing ? (
                 <SimpleEditor content={value} onChange={setValue} />
             ) : (
-                <div className="whitespace-pre-wrap break-words overflow-x-auto max-w-full" dangerouslySetInnerHTML={{ __html: value ?? "" }} />
+
+                <div className="content-wrapper">
+                    <div className="tiptap ProseMirror ProseMirror-focused">
+                        <div dangerouslySetInnerHTML={{ __html: value }} />
+                    </div>
+                </div>
             )}
         </>
     )
