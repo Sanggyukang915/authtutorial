@@ -10,6 +10,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { LoginForm } from "@/components/auth/login-form"
+import { useState } from "react"
 
 interface LoginButtonProps {
     children: React.ReactNode
@@ -23,6 +24,7 @@ export const LoginButton = ({
     asChild
 }: LoginButtonProps) => {
     const router = useRouter()
+    const [open, setOpen] = useState(false)
 
     const onClick = () => {
         router.push("/auth/login")
@@ -30,7 +32,7 @@ export const LoginButton = ({
 
     if (mode === "modal") {
         return (
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild={asChild}>
                     {children}
                 </DialogTrigger>
@@ -39,7 +41,7 @@ export const LoginButton = ({
                 </DialogDescription>
                 <DialogContent className="p-1 w-auto bg-transparent border-none">
                     <DialogTitle>Login Form</DialogTitle>
-                        <LoginForm />
+                        <LoginForm setOpen={setOpen}/>
                 </DialogContent>
             </Dialog>
         )

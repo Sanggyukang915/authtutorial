@@ -23,7 +23,11 @@ import { FormSuccess } from "@/components/form-success"
 import { login } from "@/actions/login"
 import Link from "next/link"
 
-export const LoginForm = () => {
+interface LoginFormProps {
+    setOpen?: (open: boolean) => void;
+}
+
+export const LoginForm = ({ setOpen }: LoginFormProps) => {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl");
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with differnet provider" : ""
@@ -68,6 +72,9 @@ export const LoginForm = () => {
             backButtonLable="Don't have an account?"
             backButtonHref="/auth/register"
             showSocial
+            backButtonOnClick={() => {
+                setOpen?.(false);
+            }}
         >
             <Form {...form}>
                 <form
@@ -135,7 +142,7 @@ export const LoginForm = () => {
                                                 asChild
                                                 className="px-0 font-normal"
                                             >
-                                                <Link href="/auth/reset">
+                                                <Link href="/auth/reset" onClick={() => { setOpen?.(false); }}>
                                                     Forgot password?
                                                 </Link>
                                             </Button>
