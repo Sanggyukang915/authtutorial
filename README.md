@@ -16,14 +16,7 @@ I created this blog-style personal website as a space to document and store what
 
 This project is inspired by [Code With Antonio](https://www.youtube.com/@codewithantonio), By following his code, I was able to learn about NextAuth and middleware. Additionally, I customized the UI and other features to fit my own preferences, and implemented some entirely new functionalities as well.
 
-- **Auth.js**
-- **Middleware config**
-- **Resend**
-- **Node.js**
-- **ShadcnUI**
-- **Clerk**
-
-- [Auth.js Docs]( https://authjs.dev/)
+- [Auth.js]( https://authjs.dev/)
 - [Middleware config](https://dub.sh/Apr6dvD)
 - [Resend](https://resend.com/)
 - [Node.js](https://nodejs.org/en)
@@ -51,6 +44,7 @@ Another reason is the built-in API Routes feature. It lets me create backend API
 Since many UI kits and templates are built with Tailwind CSS, it makes designing faster and more consistent.
 
 I chose Prisma because it offers a clean and type-safe way to interact with my database. It simplifies database queries with an intuitive syntax and automatically generates TypeScript types, which helps catch errors during development. Prisma also makes migrations and schema updates much easier to manage.
+
 ---
 
 ## 🧰 Technologies & Libraries
