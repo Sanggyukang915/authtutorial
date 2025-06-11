@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Test-Blog-Platform
 
-## Getting Started
+> The first iteration of [authtutorial.vercel.app](https://authtutorial.vercel.app/) — built with Next.js and hosted on Vercel
 
-First, run the development server:
+![Vercel Status](https://vercel.com/api/www-ping)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[🚀 Live Demo](https://authtutorial.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚨 About This Project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+I created this blog-style personal website as a space to document and store what I’ve learned and explored, so I can easily refer back to it later when needed. Anyone can add their own documents, share them, and also edit or delete them if necessary. Many features are still under development. For example, the Trending page will later incorporate a like system, the search functionality will be improved to be more effective, and I also plan to enhance the hashtag feature to make it easier for users to find content by tags.
 
-## Learn More
+### ✨ Inspiration & Originality
 
-To learn more about Next.js, take a look at the following resources:
+This project is inspired by [Code With Antonio](https://www.youtube.com/@codewithantonio), By following his code, I was able to learn about NextAuth and middleware. Additionally, I customized the UI and other features to fit my own preferences, and implemented some entirely new functionalities as well.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Auth.js**
+- **Middleware config**
+- **Resend**
+- **Node.js**
+- **ShadcnUI**
+- **Clerk**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Auth.js Docs]( https://authjs.dev/)
+- [Middleware config](https://dub.sh/Apr6dvD)
+- [Resend](https://resend.com/)
+- [Node.js](https://nodejs.org/en)
+- [ShadcnUI](https://resend.com/)
+- [Resend](https://ui.shadcn.com/)
+- [Clerk](https://dub.sh/SdVFxFU)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📑 Table of Contents
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Description](#-description)
+- [Technologies & Libraries](#-technologies--libraries)
+- [🔝 Back to Top](#-Test-Blog-Platform)
+
+---
+
+## 📝 Description
+
+I created this as a way to document my work, making it easy to revisit and review later.  
+
+chose Next.js because of its file-based routing system, which allows me to define routes simply by organizing files inside the /pages directory. It makes routing straightforward and intuitive without needing to set up a separate routing configuration.
+Another reason is the built-in API Routes feature. It lets me create backend API endpoints directly within the same project, without needing a separate server. This makes building full-stack applications much easier and more streamlined.
+
+Since many UI kits and templates are built with Tailwind CSS, it makes designing faster and more consistent.
+
+I chose Prisma because it offers a clean and type-safe way to interact with my database. It simplifies database queries with an intuitive syntax and automatically generates TypeScript types, which helps catch errors during development. Prisma also makes migrations and schema updates much easier to manage.
+---
+
+## 🧰 Technologies & Libraries
+
+- Next.js  
+- Node.js
+- Auth.js
+- Middleware config
+- TypeScript  
+- Tailwind CSS  
+- Vercel
+- ShadcnUI
+- Prisma
+- tiptap
+
+> 📦 For the full list of packages, see [`package.json`](./package.json)
+---
+## 🔝 Back to Top
