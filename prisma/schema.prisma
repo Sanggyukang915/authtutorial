@@ -34,6 +34,7 @@ model User {
   teams     Team[]    @relation("UserTeams")
   projects  Project[] @relation("UserProjects")
   documents Document[]
+  comments  Comment[]
 
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
