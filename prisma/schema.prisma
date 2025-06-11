@@ -30,6 +30,7 @@ model User {
   role          UserRole @default(USER)
   accounts      Account[]
 
+  likes     Document[] @relation("UserLikesDocuments")
   teams     Team[]    @relation("UserTeams")
   projects  Project[] @relation("UserProjects")
   documents Document[]
@@ -102,6 +103,8 @@ model Document{
   content   Context[]
   createdAt DateTime @default(now())
   userId    String
+  likes     User[]   @relation("UserLikesDocuments")
+  comments  Comment[]
   user      User     @relation(fields: [userId], references: [id])
   isPublic  Boolean  @default(false)
 }
@@ -112,6 +115,16 @@ model Context {
   documentId String
   document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  content    String
+  createdAt  DateTime @default(now())
+  document   Document @relation(fields: [documentId], references: [id])
+  documentId String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
 }
 
 model Team{

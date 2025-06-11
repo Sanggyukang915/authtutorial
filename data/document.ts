@@ -146,3 +146,57 @@ export async function publicDocumentsCount(pageSize: number) {
 
   return totalPages
 }
+
+export async function getLiked(documentId: string, userId: string | undefined) {
+  if (!userId) {
+    return false;
+  }
+  const liked = await db.document.findFirst({
+    where: {
+      id: documentId,
+      likes: {
+        some: {
+          id: userId,
+        },
+      },
+    },
+    select: { id: true },
+  });
+  return Boolean(liked);
+}
+
+export async function getLikedCount(documentId: string) {
+  const document = await db.document.findUnique({
+    where: { id: documentId, },
+    select: {
+      _count: {
+        select: { likes: true },
+      },
+    },
+  });
+  return document?._count.likes ?? 0;
+}
+
+export async function toggleLiked(isLiked: boolean, documentId: string, userId: string) {
+  if (isLiked) {
+    await db.document.update({
+      where: { id: documentId },
+      data: {
+        likes: {
+          disconnect: { id: userId },
+        },
+      },
+    });
+  }
+  else {
+    await db.document.update({
+      where: { id: documentId },
+      data: {
+        likes: {
+          connect: { id: userId },
+        },
+      },
+    });
+
+  }
+}

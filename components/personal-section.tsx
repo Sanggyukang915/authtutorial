@@ -5,8 +5,8 @@ import {
     ChevronRight,
     FolderIcon,
     HistoryIcon,
-    ThumbsUpIcon,
     Plus,
+    Heart,
 } from "lucide-react";
 import {
     SidebarGroup,
@@ -41,7 +41,7 @@ const items = [
     {
         title: "Liked",
         url: "/liked",
-        icon: ThumbsUpIcon,
+        icon: Heart,
         auth: true,
     },
 ]
