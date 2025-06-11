@@ -1,8 +1,7 @@
 # Test-Blog-Platform
+![image](https://github.com/user-attachments/assets/42400cb2-bd25-452c-8195-7a13ec2294be)
 
-> The first iteration of [authtutorial.vercel.app](https://authtutorial.vercel.app/) — built with Next.js and hosted on Vercel
-
-![Vercel Status](https://vercel.com/api/www-ping)
+> The first iteration of [authtutorial.vercel.app](https://authtutorial.vercel.app/) — built with [Next.js](https://nextjs.org/) and hosted on [Vercel](https://vercel.com/)
 
 [🚀 Live Demo](https://authtutorial.vercel.app/)
 
