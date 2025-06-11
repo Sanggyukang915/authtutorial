@@ -30,7 +30,7 @@ This project is inspired by [Code With Antonio](https://www.youtube.com/@codewit
 
 - [Description](#-description)
 - [Technologies & Libraries](#-technologies--libraries)
-- [🔝 Back to Top](#-Test-Blog-Platform)
+- [Back to Top](#-Test-Blog-Platform)
 
 ---
 
