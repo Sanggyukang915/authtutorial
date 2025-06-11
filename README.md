@@ -30,7 +30,6 @@ This project is inspired by [Code With Antonio](https://www.youtube.com/@codewit
 
 - [Description](#-description)
 - [Technologies & Libraries](#-technologies--libraries)
-- [Back to Top](#-Test-Blog-Platform)
 
 ---
 
@@ -63,3 +62,4 @@ I chose Prisma because it offers a clean and type-safe way to interact with my d
 > 📦 For the full list of packages, see [`package.json`](./package.json)
 ---
 ## 🔝 Back to Top
+[⬆️ Go to top](#top)
