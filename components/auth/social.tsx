@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { IoChatbubblesOutline } from "react-icons/io5";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -12,8 +13,8 @@ export const Social = () => {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl");
 
-    const onClick = (provider: "google" | "github")=>{
-        signIn(provider,{
+    const onClick = (provider: "google" | "github" | "kakao") => {
+        signIn(provider, {
             callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
         })
     }
@@ -32,9 +33,17 @@ export const Social = () => {
                 size="lg"
                 className="w-full"
                 variant="outline"
-                onClick={() =>onClick("github")}
+                onClick={() => onClick("github")}
             >
                 <FaGithub className="h-5 w-5" />
+            </Button>
+            <Button
+                size="lg"
+                className="w-full"
+                variant="outline"
+                onClick={() => onClick("kakao")}
+            >
+                <IoChatbubblesOutline className="h-5 w-5" />
             </Button>
         </div>
     )
