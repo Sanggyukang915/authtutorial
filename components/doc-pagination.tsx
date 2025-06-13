@@ -7,6 +7,7 @@ import { Loader } from "lucide-react"
 import {
     Pagination,
     PaginationContent,
+    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -98,21 +99,31 @@ export default function DocPagination({ pageSize, searchParam }: { pageSize: num
                             <PaginationPrevious href={`?${searchParam}=${page - 1}`} />
                         </PaginationItem>
                     )}
-
-                    {Array.from({ length: totalPages }).map((_, i) => {
-                        const pageNumber = i + 1
-                        return (
-                            <PaginationItem key={pageNumber}>
-                                <PaginationLink
-                                    href={`?${searchParam}=${pageNumber}`}
-                                    isActive={pageNumber === page}
-                                >
-                                    {pageNumber}
-                                </PaginationLink>
-                            </PaginationItem>
-                        )
+                    {page > 2 && (
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                    )}
+                    {Array.from({ length: 4 }).map((_, i) => {
+                        const pageNumber = page - 1 + i;
+                        if (pageNumber > 0 && pageNumber < totalPages) {
+                            return (
+                                <PaginationItem key={pageNumber}>
+                                    <PaginationLink
+                                        href={`?${searchParam}=${pageNumber}`}
+                                        isActive={pageNumber === page}
+                                    >
+                                        {pageNumber}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )
+                        }
                     })}
-
+                    {page < totalPages - 3 && (
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                    )}
                     {page < totalPages && (
                         <PaginationItem>
                             <PaginationNext href={`?${searchParam}=${page + 1}`} />
