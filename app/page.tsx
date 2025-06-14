@@ -1,4 +1,5 @@
 import DocPagination from "@/components/doc-pagination";
+import { DataTableDemo } from "@/components/data-table";
 
 export default function Home() {
   return (
@@ -13,11 +14,7 @@ export default function Home() {
           </h3>
         </div>
         <header className="justify-center text-xl font-semibold">Trending</header>
-        <div className="mt-4 mb-4 rounded-lg border border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 shadow-md p-6 hover:shadow-lg transition-shadow">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Not Implemented
-          </h3>
-        </div>
+        <DataTableDemo />
         <header className="justify-center text-xl font-semibold mb-2">Recent</header>
         <DocPagination pageSize={1} searchParam={"rpage"} />
       </div>
