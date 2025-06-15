@@ -22,6 +22,7 @@ type PublicDocument = {
     name: string;
     createdAt: Date;
     user: { name: string | null } | null;
+    _count: { likes: number };
     content: { content: string }[];
 };
 

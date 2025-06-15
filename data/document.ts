@@ -88,15 +88,15 @@ export const publicDocuments = async () => {
           name: true,
         },
       },
+      _count: {
+        select: { likes: true },
+      },
       content: {
-        take: 1, // 가장 첫 번째 내용만 가져옴
+        take: 1,
         select: {
           content: true,
         },
       },
-    },
-    orderBy: {
-      createdAt: 'desc',
     },
   })
 }
@@ -125,6 +125,9 @@ export async function publicDocumentsPaginated(page: number, pageSize: number) {
       createdAt: true,
       user: {
         select: { name: true },
+      },
+      _count: {
+        select: { likes: true },
       },
       content: {
         take: 1,
