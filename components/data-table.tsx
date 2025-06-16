@@ -15,8 +15,6 @@ import {
 } from "@tanstack/react-table"
 import { ChevronDown, MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -61,28 +59,6 @@ type PublicDocument = {
 };
 
 export const columns: ColumnDef<PublicDocument>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
     {
         id: "title",
         accessorFn: row => row.name,
@@ -308,7 +284,7 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
                     {item.name}
                 </Button>
             </DrawerTrigger>
-            <DrawerContent className="h-screen w-[400px] max-w-full ml-auto shadow-xl border-l">
+            <DrawerContent className="gap-1">
                 <DrawerHeader className="gap-1">
                     <DrawerTitle>{item.name}</DrawerTitle>
                     <DrawerDescription>
