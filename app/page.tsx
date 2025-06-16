@@ -1,4 +1,3 @@
-import DocPagination from "@/components/doc-pagination";
 import { DataTableDemo } from "@/components/data-table";
 
 export default function Home() {
