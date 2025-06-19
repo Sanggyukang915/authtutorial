@@ -38,7 +38,6 @@ import {
     DrawerContent,
     DrawerTitle,
     DrawerHeader,
-    DrawerDescription,
     DrawerFooter,
     DrawerClose,
 } from "@/components/ui/drawer"
@@ -46,6 +45,7 @@ import { DataTableColumnHeader } from "./data-table-header"
 import { DataTablePagination } from "./data-table-pagination"
 import { publicDocuments } from "@/data/document"
 import { useMobile } from "@/hooks/use-mobile"
+import Link from "next/link"
 
 type PublicDocument = {
     id: string;
@@ -142,7 +142,7 @@ export const columns: ColumnDef<PublicDocument>[] = [
     },
 ]
 
-export function DataTableDemo() {
+export function DocumentTable() {
     const [documents, setDocuments] = React.useState<PublicDocument[]>([])
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -286,26 +286,44 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
             </DrawerTrigger>
             <DrawerContent className="gap-1">
                 <DrawerHeader className="gap-1">
-                    <DrawerTitle>{item.name}</DrawerTitle>
-                    <DrawerDescription>
-                        Showing total visitors for the last 6 months
-                    </DrawerDescription>
+                    <Link href={`/doc/${item.id}`}>
+                        <Button variant="link" className="text-foreground w-fit px-0 text-left">
+                            <DrawerTitle>
+                                {item.name}
+                            </DrawerTitle>
+                        </Button>
+                    </Link>
                 </DrawerHeader>
                 <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
                     {!isMobile && (
                         <>
-                            <div className="grid gap-2">
-                                <div className="flex gap-2 leading-none font-medium">
-                                    Trending up by 5.2% this month{" "}
-                                </div>
-                                <div className="text-muted-foreground">
-                                    Showing total visitors for the last 6 months. This is just
-                                    some random text to test the layout. It spans multiple lines
-                                    and should wrap around.
-                                </div>
-                            </div>
                         </>
                     )}
+                    <div className="flex gap-3">
+                        <div>Title</div>
+                        <div>{item.name}</div>
+                    </div>
+                    <div className="flex gap-3">
+                        <div>Author</div>
+                        <div>{item.user.name}</div>
+                    </div>
+                    <div className="flex gap-3">
+                        <div>Created At</div>
+                        <div>{new Date(item.createdAt).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                        })
+                        }</div>
+                    </div>
+                    <div className="flex gap-3">
+                        <div>Liked</div>
+                        <div>{item._count.likes}</div>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <div>Content Preview</div>
+                        <div>{item.content[0]?.content.slice(0, 500).replace(/<[^>]*>/g, "")}...</div>
+                    </div>
                 </div>
                 <DrawerFooter>
                     <DrawerClose asChild>

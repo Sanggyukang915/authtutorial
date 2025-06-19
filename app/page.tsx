@@ -1,12 +1,11 @@
-import DocPagination from "@/components/doc-pagination";
-import { DataTableDemo } from "@/components/data-table";
+import { DocumentTable } from "@/components/doc-table";
 
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <DataTableDemo />
+          <DocumentTable />
         </div>
       </div>
     </div>
