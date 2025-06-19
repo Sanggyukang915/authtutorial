@@ -1,5 +1,4 @@
 import { DocumentTable } from "@/components/doc-table";
-
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
