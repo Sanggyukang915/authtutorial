@@ -67,7 +67,7 @@ export default function DocumentPage() {
         const viewCount = await views("home");
         setViewers(viewCount);
       } catch (err) {
-        toast.error("Something went wrong!");
+        toast.error(`Something went wrong!:${err}`)
       }
     };
 

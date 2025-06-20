@@ -28,8 +28,8 @@ export default function Home() {
 
         const viewers = await views("home");
         setViewers(viewers);
-      } catch (error) {
-        toast.error("Something went wrong");
+      } catch (err) {
+        toast.error(`Something went wrong!:${err}`)
       }
     }
 
