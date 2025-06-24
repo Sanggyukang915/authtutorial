@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { Redis } from "@upstash/redis";
+import { format } from "date-fns";
 
 const redis = Redis.fromEnv();
 
@@ -32,7 +33,8 @@ export async function incr(id: string, isMobile: boolean) {
             return { message: "Already counted" };
         }
     }
-    if (isMobile) await redis.incr(`pageviews:docuemnts:${id}:mobile`);
-    else await redis.incr(`pageviews:docuemnts:${id}:desktop`)
+    const today = format(new Date(), "MM/dd/yyyy");
+    if (isMobile) await redis.hincrby(`pageviews:docuemnts:${id}:${today}`,"mobile",1);
+    else await redis.hincrby(`pageviews:docuemnts:${id}:${today}`,"desktop",1);
     return { message: "Counted" };
 }

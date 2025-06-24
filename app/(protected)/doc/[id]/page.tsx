@@ -12,7 +12,6 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { useMobile } from "@/hooks/use-mobile";
 import { incr } from "@/actions/incr";
 import { toast } from "sonner";
-import { views } from "@/data/view";
 
 interface Document {
   id: string;
@@ -27,17 +26,12 @@ interface Document {
     documentId: string;
   }[];
 }
-interface Viewers {
-  mobileViewers: number;
-  desktopViewers: number;
-}
 
 export default function DocumentPage() {
   const id = useParams().id as string
   const [document, setDocument] = useState<Document | null>(null);
   const [isLiked, setIsLiked] = useState(false);
   const [isCurrentUserDoc, setIsCurrentUserDoc] = useState(false);
-  const [viewers, setViewers] = useState<Viewers>({ mobileViewers: 0, desktopViewers: 0 });
 
   const currentUser = useCurrentUser();
   const isMobile = useMobile();
@@ -60,12 +54,10 @@ export default function DocumentPage() {
 
         setIsCurrentUserDoc(doc.userId === currentUser?.id);
 
-        const result = await incr("home", isMobile);
+        const result = await incr(id, isMobile);
         if (result.error) toast.error(result.error);
         if (result.message) toast.success(result.message);
 
-        const viewCount = await views("home");
-        setViewers(viewCount);
       } catch (err) {
         toast.error(`Something went wrong!:${err}`)
       }
@@ -79,8 +71,6 @@ export default function DocumentPage() {
   return (
     <div className="min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <div>{viewers?.desktopViewers}</div>
-        <div>{viewers?.mobileViewers}</div>
         <div className="flex justify-between text-3xl font-semibold mb-2">
           <p>{document.name}</p>
           {isCurrentUserDoc ? (
