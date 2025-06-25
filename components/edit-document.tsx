@@ -2,7 +2,6 @@
 
 import { useState, useTransition } from "react";
 import { deleteDocumentContent, getDocument, updateDocumentContent } from "@/data/document";
-import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { SimpleEditor } from "./tiptap-templates/simple/simple-editor";
 import { Document } from "@/app/(protected)/doc/[id]/page";
@@ -25,7 +24,6 @@ interface Propts {
 export default function EditDocument({ contextId, content, isCurrentUserDoc, document, setDocument }: Propts) {
     const [value, setValue] = useState<string>(content);
     const [isPending, startTransition] = useTransition();
-    const router = useRouter();
     const [isEditing, setIsEditing] = useState(false)
 
     const handleChange = () => {
