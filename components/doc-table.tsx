@@ -54,6 +54,7 @@ import { publicDocuments } from "@/data/document"
 import { useMobile } from "@/hooks/use-mobile"
 import Link from "next/link"
 import { Separator } from "./ui/separator"
+import { views } from "@/data/view"
 
 type PublicDocument = {
     id: string;
@@ -281,14 +282,6 @@ export function DocumentTable() {
         </div>
     )
 }
-const chartData = [
-    { month: "January", desktop: 186, mobile: 80 },
-    { month: "February", desktop: 305, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-]
 
 const chartConfig = {
     desktop: {
@@ -301,8 +294,23 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
+interface Viewers {
+    date: string;
+    mobile: number;
+    desktop: number;
+}
+
 function TableCellViewer({ item }: { item: PublicDocument }) {
     const isMobile = useMobile()
+    const [viewers, setViewers] = React.useState<Viewers[]>();
+
+    React.useEffect(() => {
+        async function fetchViewers() {
+            const data = await views(item.id, 90);
+            setViewers(data);
+        }
+        fetchViewers();
+    }, [])
 
     return (
         <Drawer direction={isMobile ? "bottom" : "right"}>
@@ -327,7 +335,7 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
                             <ChartContainer config={chartConfig}>
                                 <AreaChart
                                     accessibilityLayer
-                                    data={chartData}
+                                    data={viewers}
                                     margin={{
                                         left: 0,
                                         right: 10,
@@ -366,13 +374,8 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
                             </ChartContainer>
                             <Separator />
                             <div className="grid gap-2">
-                                <div className="flex gap-2 leading-none font-medium">
-                                    Trending up by 5.2% this month{" "}
-                                </div>
                                 <div className="text-muted-foreground">
-                                    Showing total visitors for the last 6 months. This is just
-                                    some random text to test the layout. It spans multiple lines
-                                    and should wrap around.
+                                    Showing total visitors for the last 6 months.
                                 </div>
                             </div>
                             <Separator />

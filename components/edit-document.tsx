@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { deleteDocumentContent, updateDocumentContent } from "@/data/document";
+import { deleteDocumentContent, getDocument, updateDocumentContent } from "@/data/document";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { SimpleEditor } from "./tiptap-templates/simple/simple-editor";
+import { Document } from "@/app/(protected)/doc/[id]/page";
 
 import "@/components/tiptap-node/code-block-node/code-block-node.scss"
 import "@/components/tiptap-node/list-node/list-node.scss"
@@ -17,24 +18,33 @@ interface Propts {
     contextId: string;
     content: string;
     isCurrentUserDoc: boolean;
+    document: Document | null;
+    setDocument: React.Dispatch<React.SetStateAction<Document | null>>;
 }
 
-export default function EditDocument({ contextId, content, isCurrentUserDoc }: Propts) {
+export default function EditDocument({ contextId, content, isCurrentUserDoc, document, setDocument }: Propts) {
     const [value, setValue] = useState<string>(content);
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const [isEditing, setIsEditing] = useState(false)
 
     const handleChange = () => {
-        startTransition(() => {
-            updateDocumentContent(contextId, value)
+        startTransition(async () => {
+            await updateDocumentContent(contextId, value)
+            if (document?.id) {
+                const doc = await getDocument(document?.id)
+                setDocument(doc);
+            }
         })
     }
     const handleDelete = () => {
-        startTransition(() => {
-            deleteDocumentContent(contextId);
+        startTransition(async () => {
+            await deleteDocumentContent(contextId)
+            if (document?.id) {
+                const doc = await getDocument(document?.id)
+                setDocument(doc);
+            }
         });
-        router.refresh()
     };
     return (
         <>

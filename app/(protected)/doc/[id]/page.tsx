@@ -13,7 +13,7 @@ import { useMobile } from "@/hooks/use-mobile";
 import { incr } from "@/actions/incr";
 import { toast } from "sonner";
 
-interface Document {
+export interface Document {
   id: string;
   name: string;
   createdAt: Date;
@@ -66,6 +66,12 @@ export default function DocumentPage() {
     fetchData();
   }, [id, currentUser?.id, isMobile]);
 
+  const handleAddContent = async (formData: FormData) => {
+    await newContent(formData);
+    const doc = await getDocument(id);
+    setDocument(doc);
+  };
+
   if (!document) return <div>Loading...</div>;
 
   return (
@@ -89,11 +95,18 @@ export default function DocumentPage() {
             key={ctx.id}
             className="mt-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-sm p-4"
           >
-            <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} />
+            <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} document={document} setDocument={setDocument}/>
           </div>
         ))}
         {isCurrentUserDoc && (
-          <form action={newContent} className="mt-6">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.currentTarget);
+              handleAddContent(formData);
+            }}
+            className="mt-6"
+          >
             <input type="hidden" name="documentId" value={id} />
             <Button type="submit" variant="outline">
               + New Content Add
