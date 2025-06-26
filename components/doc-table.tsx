@@ -13,14 +13,12 @@ import {
     useReactTable,
     VisibilityState,
 } from "@tanstack/react-table"
-import { ChevronDown, MoreHorizontal } from "lucide-react"
+import { ChevronDown, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
@@ -93,12 +91,25 @@ export const columns: ColumnDef<PublicDocument>[] = [
         ),
         cell: ({ row }) => {
             const likes = row.getValue("likes") as number;
-            return <div className="text-center font-medium">{likes}</div>
+            return (
+                <div className="relative w-fit inline-block">
+                    <Heart
+                        className={`w-6 h-6 ${likes ? "stroke-pink-400" : "stroke-gray-400"}`}
+                    />
+                    <span
+                        className="absolute -top-1 -right-1 text-[10px] font-semibold text-pink-600"
+                    >
+                        {likes}
+                    </span>
+                </div>
+            )
         },
     },
     {
         accessorKey: "createdAt",
-        header: "Created At",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Created At" />
+        ),
         cell: ({ row }) => {
             const date = row.getValue("createdAt") as Date;
             return <div className="font-medium">{
@@ -117,36 +128,6 @@ export const columns: ColumnDef<PublicDocument>[] = [
         cell: ({ row }) => {
             const preview = row.getValue("content") as string;
             return <div className="text-sm text-muted-foreground">{preview.slice(0, 100).replace(/<[^>]*>/g, "")}</div>
-        },
-    },
-    {
-        id: "actions",
-        enableHiding: false,
-        cell: ({ row }) => {
-            const payment = row.original
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
-                            size="icon"
-                        >
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
         },
     },
 ]
@@ -400,7 +381,16 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
                     </div>
                     <div className="flex gap-3">
                         <div>Liked</div>
-                        <div>{item._count.likes}</div>
+                        <div className="relative w-fit inline-block">
+                            <Heart
+                                className={`w-6 h-6 ${item._count.likes ? "stroke-pink-400" : "stroke-gray-400"}`}
+                            />
+                            <span
+                                className="absolute -top-1 -right-1 text-[10px] font-semibold text-pink-600"
+                            >
+                                {item._count.likes}
+                            </span>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         <div>Content Preview</div>
