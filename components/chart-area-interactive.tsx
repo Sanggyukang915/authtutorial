@@ -2,8 +2,6 @@
 
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import { useMobile } from "@/hooks/use-mobile"
 import {
   Card,
   CardAction,
@@ -29,7 +27,6 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
-import { views } from "@/data/view"
 import { format } from "date-fns"
 
 export const description = "An interactive area chart"
@@ -48,25 +45,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+interface ChartAreaInteractiveProps {
+  isMobile: boolean;
+  viewers: Viewers[];
+}
+
 interface Viewers {
   date: string;
   mobile: number;
   desktop: number;
 }
 
-export function ChartAreaInteractive() {
-  const isMobile = useMobile()
+export function ChartAreaInteractive({isMobile, viewers}:ChartAreaInteractiveProps) {
   const [timeRange, setTimeRange] = React.useState("7d")
-  const [viewers, setViewers] = React.useState<Viewers[]>();
   const [filteredData, setFilteredData] = React.useState<Viewers[]>([]);
-
-  React.useEffect(() => {
-    async function fetchViewers() {
-      const data = await views("home", 90);
-      setViewers(data);
-    }
-    fetchViewers();
-  }, [])
 
   React.useEffect(() => {
     if (isMobile) {

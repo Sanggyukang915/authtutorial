@@ -1,37 +1,23 @@
-"use client"
+"use server"
 
 import { incr } from "@/actions/incr";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { DocumentTable } from "@/components/doc-table";
-import { useMobile } from "@/hooks/use-mobile";
-import { useEffect } from "react";
-import { toast } from "sonner";
+import { views } from "@/data/view";
+import { headers } from "next/headers";
 
-export default function Home() {
-  const isMobile = useMobile();
-  useEffect(() => {
-    async function trackPageView() {
-      try {
-        const result = await incr("home", isMobile);
+export default async function Home() {
+  const userAgent = (await headers()).get("user-agent");
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent ?? "")
 
-        if (result.error) {
-          toast.error(result.error);
-        } else if (result.message) {
-          toast.success(result.message);
-        }
+  await incr("home", isMobile);
+  const viewers = await views("home", 90);
 
-      } catch (err) {
-        toast.error(`Something went wrong!:${err}`)
-      }
-    }
-
-    trackPageView();
-  }, []);
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <ChartAreaInteractive />
+          <ChartAreaInteractive isMobile={isMobile} viewers={viewers}/>
           <DocumentTable />
         </div>
       </div>

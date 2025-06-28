@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { SearchIcon } from "lucide-react"
 import { publicDocumentsNameId } from "@/data/document"
+import Link from "next/link"
 
 type Doc = {
   id: string
@@ -56,14 +57,13 @@ export function SearchBar() {
             </li>
           ) : (
             filtered.map((doc) => (
-              <li
-                key={doc.id}
-                onMouseDown={() => {
-                  window.location.href = `/${doc.id}`
-                }}
-                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-zinc-800 cursor-pointer transition"
-              >
-                {doc.name}
+              <li key={doc.id}>
+                <Link
+                  href={`/doc/${doc.id}`}
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-zinc-800 cursor-pointer transition"
+                >
+                  {doc.name}
+                </Link>
               </li>
             ))
           )}

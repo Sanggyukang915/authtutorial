@@ -282,19 +282,27 @@ interface Viewers {
 }
 
 function TableCellViewer({ item }: { item: PublicDocument }) {
-    const isMobile = useMobile()
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [hasFetched, setHasFetched] = React.useState(false);
     const [viewers, setViewers] = React.useState<Viewers[]>();
+    const isMobile = useMobile()
 
-    React.useEffect(() => {
-        async function fetchViewers() {
-            const data = await views(item.id, 90);
-            setViewers(data);
-        }
-        fetchViewers();
-    }, [])
+    const fetchViewers = async () => {
+        const data = await views(item.id, 90);
+        setViewers(data);
+    };
 
     return (
-        <Drawer direction={isMobile ? "bottom" : "right"}>
+        <Drawer
+            open={isOpen}
+            onOpenChange={(open) => {
+                setIsOpen(open);
+                if (open && !hasFetched) {
+                    fetchViewers();
+                    setHasFetched(true);
+                }
+            }}
+            direction={isMobile ? "bottom" : "right"}>
             <DrawerTrigger asChild>
                 <Button variant="link" className="text-foreground w-fit px-0 text-left">
                     {item.name}

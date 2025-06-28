@@ -1,78 +1,29 @@
-"use client"
+"use server"
 
 import { getDocument, getLiked } from "@/data/document";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { newContent } from "@/actions/new-content";
 import { Button } from "@/components/ui/button";
 import EditDocument from "@/components/edit-document";
 import { TogglePublic } from "@/components/toggle-public";;
 import { Togglelikes } from "@/components/toggle-likes";
-import { useEffect, useState } from "react";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { useMobile } from "@/hooks/use-mobile";
-import { incr } from "@/actions/incr";
-import { toast } from "sonner";
+import { currentUser } from "@/lib/auth";
 
-export interface Document {
-  id: string;
-  name: string;
-  createdAt: Date;
-  userId: string;
-  isPublic: boolean;
-  content: {
-    id: string;
-    createdAt: Date;
-    content: string;
-    documentId: string;
-  }[];
+interface DocumentPageProps {
+  params: Promise<{ id: string }>
 }
 
-export default function DocumentPage() {
-  const id = useParams().id as string
-  const [document, setDocument] = useState<Document | null>(null);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isCurrentUserDoc, setIsCurrentUserDoc] = useState(false);
+export default async function DocumentPage({ params }: DocumentPageProps) {
+  const id = (await params).id;
+  const document = await getDocument(id);
+  const curUser = await currentUser();
 
-  const currentUser = useCurrentUser();
-  const isMobile = useMobile();
+  if (!document) {
+    notFound();
+  }
 
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchData = async () => {
-      try {
-        const doc = await getDocument(id);
-
-        if (!doc) {
-          notFound()
-        }
-
-        setDocument(doc);
-
-        const liked = await getLiked(doc.id, currentUser?.id);
-        setIsLiked(liked);
-
-        setIsCurrentUserDoc(doc.userId === currentUser?.id);
-
-        const result = await incr(id, isMobile);
-        if (result.error) toast.error(result.error);
-        if (result.message) toast.success(result.message);
-
-      } catch (err) {
-        toast.error(`Something went wrong!:${err}`)
-      }
-    };
-
-    fetchData();
-  }, [id, currentUser?.id, isMobile]);
-
-  const handleAddContent = async (formData: FormData) => {
-    await newContent(formData);
-    const doc = await getDocument(id);
-    setDocument(doc);
-  };
-
-  if (!document) return <div>Loading...</div>;
+  const isCurrentUserDoc = (document.userId === curUser?.id)
+  const isLiked = await getLiked(document.id, curUser?.id)
 
   return (
     <div className="min-h-screen">
@@ -82,7 +33,7 @@ export default function DocumentPage() {
           {isCurrentUserDoc ? (
             <TogglePublic documentId={document.id} isPublic={document.isPublic} />
           ) : (
-            <Togglelikes documentId={document.id} userId={currentUser?.id} isLiked={isLiked} />
+            <Togglelikes documentId={document.id} userId={curUser?.id} isLiked={isLiked} />
           )}
         </div>
         <p className="text-gray-600 text-sm">Document ID: {document.id}</p>
@@ -95,18 +46,11 @@ export default function DocumentPage() {
             key={ctx.id}
             className="mt-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-sm p-4"
           >
-            <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} document={document} setDocument={setDocument}/>
+            <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} />
           </div>
         ))}
         {isCurrentUserDoc && (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.currentTarget);
-              handleAddContent(formData);
-            }}
-            className="mt-6"
-          >
+          <form action={newContent} className="mt-6">
             <input type="hidden" name="documentId" value={id} />
             <Button type="submit" variant="outline">
               + New Content Add
