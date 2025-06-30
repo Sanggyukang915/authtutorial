@@ -28,6 +28,7 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 import { format } from "date-fns"
+import { useMobile } from "@/hooks/use-mobile"
 
 export const description = "An interactive area chart"
 
@@ -46,7 +47,6 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface ChartAreaInteractiveProps {
-  isMobile: boolean;
   viewers: Viewers[];
 }
 
@@ -56,7 +56,8 @@ interface Viewers {
   desktop: number;
 }
 
-export function ChartAreaInteractive({isMobile, viewers}:ChartAreaInteractiveProps) {
+export function ChartAreaInteractive({ viewers }: ChartAreaInteractiveProps) {
+  const isMobile = useMobile();
   const [timeRange, setTimeRange] = React.useState("7d")
   const [filteredData, setFilteredData] = React.useState<Viewers[]>([]);
 

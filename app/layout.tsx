@@ -10,6 +10,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import { AppNavBar } from "@/components/app-navbar";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -47,7 +48,7 @@ export default async function RootLayout({
             <SidebarProvider>
               <AppSidebar />
               <AppNavBar>
-                  {children}
+                {children}
               </AppNavBar>
             </SidebarProvider>
           </ThemeProvider>

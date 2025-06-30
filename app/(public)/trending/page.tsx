@@ -1,5 +1,15 @@
-export default function TrendingPage() {
+"use server"
+
+import { DocumentTable } from "@/components/doc-table";
+
+export default async function TrendingPage() {
   return (
-    <div>trending</div>
+    <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+          <DocumentTable />
+        </div>
+      </div>
+    </div>
   )
 }

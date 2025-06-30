@@ -8,6 +8,8 @@ import EditDocument from "@/components/edit-document";
 import { TogglePublic } from "@/components/toggle-public";;
 import { Togglelikes } from "@/components/toggle-likes";
 import { currentUser } from "@/lib/auth";
+import { incr } from "@/actions/incr";
+import { headers } from "next/headers";
 
 interface DocumentPageProps {
   params: Promise<{ id: string }>
@@ -24,6 +26,9 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
 
   const isCurrentUserDoc = (document.userId === curUser?.id)
   const isLiked = await getLiked(document.id, curUser?.id)
+  const userAgent = (await headers()).get("user-agent");
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent ?? "")
+  await incr(id, isMobile)
 
   return (
     <div className="min-h-screen">

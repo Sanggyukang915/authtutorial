@@ -91,6 +91,7 @@ export const publicDocuments = async () => {
       _count: {
         select: { likes: true },
       },
+      views:true,
       content: {
         take: 1,
         select: {
@@ -202,4 +203,15 @@ export async function toggleLiked(isLiked: boolean, documentId: string, userId: 
     });
 
   }
+}
+
+export async function incrViews(documentId:string) {
+  await db.document.update({
+  where: { id: documentId },
+  data: {
+    views: {
+      increment: 1,
+    },
+  },
+});
 }

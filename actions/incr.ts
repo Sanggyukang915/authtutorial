@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { Redis } from "@upstash/redis";
 import { format } from "date-fns";
+import { incrViews } from "@/data/document";
 
 const redis = Redis.fromEnv();
 
@@ -36,5 +37,8 @@ export async function incr(id: string, isMobile: boolean) {
     const today = format(new Date(), "MM/dd/yyyy");
     if (isMobile) await redis.hincrby(`pageviews:docuemnts:${id}:${today}`,"mobile",1);
     else await redis.hincrby(`pageviews:docuemnts:${id}:${today}`,"desktop",1);
+    if(id !=="home"){
+        await incrViews(id);
+    }
     return { message: "Counted" };
 }

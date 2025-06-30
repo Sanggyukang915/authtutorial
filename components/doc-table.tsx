@@ -62,6 +62,7 @@ type PublicDocument = {
     _count: {
         likes: number;
     }
+    views: number;
     content: { content: string }[];
 };
 
@@ -81,6 +82,17 @@ export const columns: ColumnDef<PublicDocument>[] = [
         cell: ({ row }) => {
             const user = row.getValue("author") as string
             return <div className="capitalize">{user}</div>
+        },
+    },
+    {
+        id: "views",
+        accessorFn: row => row.views,
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Views" />
+        ),
+        cell: ({ row }) => {
+            const view = row.getValue("views") as number;
+            return <div className="font-medium">{view}</div>
         },
     },
     {
