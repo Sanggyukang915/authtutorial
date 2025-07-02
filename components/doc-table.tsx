@@ -418,6 +418,9 @@ function TableCellViewer({ item }: { item: PublicDocument }) {
                     </div>
                 </div>
                 <DrawerFooter>
+                    <Button asChild className="w-full" variant="outline">
+                        <Link href={`/doc/${item.id}`}>More</Link>
+                    </Button>
                     <DrawerClose asChild>
                         <Button variant="outline">Close</Button>
                     </DrawerClose>
