@@ -72,7 +72,7 @@ I chose Prisma because it offers a clean and type-safe way to interact with my d
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/Sanggyukang915/authtutorial.git
-cd test-blog-platform
+cd authtutorial
 ```
 2. Install dependencies
 ```bash
