@@ -9,7 +9,8 @@
 
 | Home | Editor | Trending |
 |------|--------|----------|
-| ![home]() | ![editor]() | ![trending]() |
+| ![home](https://github.com/user-attachments/assets/01731ced-ee7b-43fb-8dec-21ceab389a79) | ![editor](https://github.com/user-attachments/assets/a2d1337a-3cc5-4931-82a5-ce6bbc55d330) | ![trending](https://github.com/user-attachments/assets/5c255d29-9e8f-4df5-8e2b-23a1d17686d7) |
+
 
 ---
 
@@ -87,6 +88,11 @@ cp .env.example .env
 ```bash
 npm run dev
 ```
+---
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ---
 ## 🔝 Back to Top
 [⬆️ Go to top](#top)
