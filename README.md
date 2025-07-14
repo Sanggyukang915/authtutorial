@@ -1,9 +1,15 @@
 # Test-Blog-Platform
-![image](https://github.com/user-attachments/assets/1e1d8761-3993-4545-8707-5d254396e585)
 
 > The first iteration of [authtutorial.vercel.app](https://authtutorial.vercel.app/) — built with [Next.js](https://nextjs.org/) and hosted on [Vercel](https://vercel.com/)
 
 [🚀 Live Demo](https://authtutorial.vercel.app/)
+
+---
+## 📸 Screenshots
+
+| Home | Editor | Trending |
+|------|--------|----------|
+| ![home]() | ![editor]() | ![trending]() |
 
 ---
 
@@ -59,6 +65,28 @@ I chose Prisma because it offers a clean and type-safe way to interact with my d
 - tiptap
 
 > 📦 For the full list of packages, see [`package.json`](./package.json)
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Sanggyukang915/authtutorial.git
+cd test-blog-platform
+```
+2. Install dependencies
+```bash
+npm install
+```
+3. Set up environment variables
+Create .env file using .env.example as a guide:
+```bash
+cp .env.example .env
+```
+4. Run the development server
+```bash
+npm run dev
+```
 ---
 ## 🔝 Back to Top
 [⬆️ Go to top](#top)
