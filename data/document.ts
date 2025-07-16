@@ -102,6 +102,68 @@ export const publicDocuments = async () => {
   })
 }
 
+export const publicTrendDocuments = async () => {
+  return await db.document.findMany({
+    where: {
+      isPublic: true,
+    },
+        orderBy: {
+      views: 'desc',
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      _count: {
+        select: { likes: true },
+      },
+      views:true,
+      content: {
+        take: 1,
+        select: {
+          content: true,
+        },
+      },
+    },
+  })
+}
+
+export const publicRecentDocuments = async () => {
+  return await db.document.findMany({
+    where: {
+      isPublic: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      user: {
+        select: {
+          name: true,
+        },
+      },
+      _count: {
+        select: { likes: true },
+      },
+      views: true,
+      content: {
+        take: 1,
+        select: {
+          content: true,
+        },
+      },
+    },
+  });
+};
+
 export const publicDocumentsNameId = async () => {
   return await db.document.findMany({
     where: {

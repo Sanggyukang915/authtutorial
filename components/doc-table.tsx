@@ -144,8 +144,7 @@ export const columns: ColumnDef<PublicDocument>[] = [
     },
 ]
 
-export function DocumentTable() {
-    const [documents, setDocuments] = React.useState<PublicDocument[]>([])
+export function DocumentTable({ doc }: { doc: PublicDocument[] }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -154,16 +153,8 @@ export function DocumentTable() {
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
-    React.useEffect(() => {
-        const getDos = async () => {
-            const docs = await publicDocuments();
-            setDocuments(docs);
-        }
-        getDos();
-    }, [])
-
     const table = useReactTable({
-        data: documents,
+        data: doc,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
