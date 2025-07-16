@@ -48,7 +48,6 @@ import {
 } from "@/components/ui/chart"
 import { DataTableColumnHeader } from "./data-table-header"
 import { DataTablePagination } from "./data-table-pagination"
-import { publicDocuments } from "@/data/document"
 import { useMobile } from "@/hooks/use-mobile"
 import Link from "next/link"
 import { Separator } from "./ui/separator"
