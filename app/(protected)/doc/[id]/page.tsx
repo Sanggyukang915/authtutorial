@@ -31,38 +31,36 @@ export default async function DocumentPage({ params }: DocumentPageProps) {
   await incr(id, isMobile)
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between text-3xl font-semibold mb-2">
-          <p>{document.name}</p>
-          {isCurrentUserDoc ? (
-            <TogglePublic documentId={document.id} isPublic={document.isPublic} />
-          ) : (
-            <Togglelikes documentId={document.id} userId={curUser?.id} isLiked={isLiked} />
-          )}
-        </div>
-        <p className="text-gray-600 text-sm">Document ID: {document.id}</p>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Created at: {document.createdAt.toLocaleString()}
-        </p>
-
-        {document.content?.map((ctx) => (
-          <div
-            key={ctx.id}
-            className="mt-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-sm p-4"
-          >
-            <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} />
-          </div>
-        ))}
-        {isCurrentUserDoc && (
-          <form action={newContent} className="mt-6">
-            <input type="hidden" name="documentId" value={id} />
-            <Button type="submit" variant="outline">
-              + New Content Add
-            </Button>
-          </form>
+    <>
+      <div className="flex justify-between text-3xl font-semibold mb-2">
+        <p>{document.name}</p>
+        {isCurrentUserDoc ? (
+          <TogglePublic documentId={document.id} isPublic={document.isPublic} />
+        ) : (
+          <Togglelikes documentId={document.id} userId={curUser?.id} isLiked={isLiked} />
         )}
       </div>
-    </div>
+      <p className="text-gray-600 text-sm">Document ID: {document.id}</p>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Created at: {document.createdAt.toLocaleString()}
+      </p>
+
+      {document.content?.map((ctx) => (
+        <div
+          key={ctx.id}
+          className="mt-6 rounded-xl border bg-white dark:bg-zinc-900 shadow-sm p-4"
+        >
+          <EditDocument contextId={ctx.id} content={ctx.content} isCurrentUserDoc={isCurrentUserDoc} />
+        </div>
+      ))}
+      {isCurrentUserDoc && (
+        <form action={newContent} className="mt-6">
+          <input type="hidden" name="documentId" value={id} />
+          <Button type="submit" variant="outline">
+            + New Content Add
+          </Button>
+        </form>
+      )}
+    </>
   );
 }

@@ -4,8 +4,10 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     return (
-        <div>
-            {children}
+        <div className="min-h-screen">
+            <div className="max-w-4xl mx-auto">
+                {children}
+            </div>
         </div>
     )
 }

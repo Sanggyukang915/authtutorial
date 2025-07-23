@@ -51,6 +51,7 @@ export const PersonalSection = () => {
     const router = useRouter();
     const docs = useCurrentDocuments();
     const [documents, setDocuments] = useState<Document[]>();
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         setDocuments(docs);
@@ -70,6 +71,7 @@ export const PersonalSection = () => {
         setDocuments(prev => prev?.filter(doc => doc.id !== id));
     }
 
+    const visibleDocuments = showAll ? documents : documents?.slice(0, 5);
     return (
         <SidebarGroup>
             <SidebarGroupLabel>You</SidebarGroupLabel>
@@ -106,7 +108,7 @@ export const PersonalSection = () => {
                             </CollapsibleTrigger>
                             <CollapsibleContent>
                                 <SidebarMenuSub>
-                                    {documents?.map(doc => (
+                                    {visibleDocuments?.map(doc => (
                                         <EditSideVarDocument
                                             key={doc.id}
                                             id={doc.id}
@@ -115,7 +117,16 @@ export const PersonalSection = () => {
                                             onDelete={handleDelete}
                                         />
                                     ))}
-
+                                    {documents && documents.length > 5 && (
+                                        <SidebarMenuButton
+                                            onClick={() => setShowAll(prev => !prev)}
+                                            className="flex items-center gap-4 text-sm text-muted-foreground hover:text-primary"
+                                            tooltip="Toggle Documents"
+                                        >
+                                            <span>{showAll ? "Show Less" : "Show More"}</span>
+                                            <ChevronRight className={`ml-auto transition-transform duration-200 ${showAll ? "-rotate-90" : "rotate-90"}`} />
+                                        </SidebarMenuButton>
+                                    )}
                                     <SidebarMenuSubItem>
                                         <button
                                             onClick={handleAdd}
@@ -131,6 +142,6 @@ export const PersonalSection = () => {
                     </Collapsible>
                 </SidebarMenu>
             </SidebarGroupContent>
-        </SidebarGroup>
+        </SidebarGroup >
     )
 }
